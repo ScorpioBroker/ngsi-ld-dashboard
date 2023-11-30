@@ -1,0 +1,44 @@
+[
+    {
+        "name": "AirQualityPM10",
+        "query": {
+            "name": "AirQualityPM10",
+            "highlight-attrib": "pm10",
+            "type": "AirQualityObserved"
+        }
+    },
+    {
+        "name": "TrafficObserved",
+        "query": {
+            "name": "TrafficObserved",
+            "highlight-attrib": "avg_speed",
+            "type": "TrafficObserved"
+        }
+    },
+    {
+        "name": "Building",
+        "query": {
+            "name": "Building",
+            "highlight-attrib": "building_id",
+            "type": "Building"
+        }
+    },
+	{
+        "name": "WeatherObservedRaw",
+        "query": {
+            "name": "WeatherObservedRaw",
+            "highlight-attrib": "temperature",
+            "type": "WeatherObserved",
+			"idPattern": "urn:ngsi-ld:WeatherObserved:MadridTemperature:ID:.*"
+        }
+    },
+	{
+        "name": "WeatherIndex",
+        "query": {
+            "name": "WeatherIndex",
+            "highlight-attrib": "temperature",
+            "type": "WeatherObserved",
+			"idPattern": "urn:ngsi-ld:WeatherObserved:Madrid:Hexagon:.*"
+        }
+    }
+]
