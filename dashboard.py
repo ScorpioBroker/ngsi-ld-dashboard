@@ -46,8 +46,8 @@ if os.path.exists('queries.json'):
 scorpio_host = os.getenv('DASH_SCORPIO_HOST', 'http://192.168.42.236:9090')
 header_title = os.getenv('DASH_SCORPIO_HEADER_TITLE', 'City Livability Index Flexibe Frontend')
 query_title = os.getenv('DASH_SCORPIO_QUERY_TITLE', 'Indexes')
-server_port = int(os.getenv('DASH_SCORPIO_QUERY_TITLE', '9999'))
-atcontext_link = {'Link': '<'+ os.getenv('DASH_ATCONTEXT', 'https://raw.githubusercontent.com/smart-data-models/data-models/master/context.jsonld') +'>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'}
+server_port = int(os.getenv('DASH_SCORPIO_QUERY_TITLE', '8888'))
+atcontext_link = {'Link': '<'+ os.getenv('DASH_ATCONTEXT', 'https://raw.githubusercontent.com/ScorpioBroker/ngsi-ld-dashboard/master/context.json') +'>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'}
 chroma = "https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.0/chroma.min.js"  # js lib used for colors
 app = Dash(external_scripts=[chroma], prevent_initial_callbacks=True, external_stylesheets=[dbc.themes.DARKLY])
 
@@ -138,6 +138,8 @@ def updateData(queries):
     for query in queries:
       name = query['name']
       valueAttrib = query['query']['highlight-attrib']
+      print(name)
+      print(str(query))
       q = None
       if 'q' in query['query']:
         q = query['query']['q']
@@ -215,8 +217,8 @@ def updateData(queries):
           metaData = '<h5>' + entityId + '</h5><br>' + metaData
           mapLayers[name]['metadata'].append(metaData)
           mapLayers[name]['id'].append(entityId)
-          if 'min' in query and 'max' in query:
-            mapLayers[name]['minmax'] = {'min': query['min'], 'max': query['max']}
+          if 'min' in query['query'] and 'max' in query['query']:
+            mapLayers[name]['minmax'] = {'min': query['query']['min'], 'max': query['query']['max']}
           else:
             mapLayers[name]['minmax'] = {'min': queryMin, 'max': queryMax}
           mapLayers[name]['geoJson'][-1]['properties'] = entity
@@ -351,7 +353,7 @@ def handleRelClick(clickData):
   tmp = clickData['points'][0]
   if len([i for i, letter in enumerate(tmp['currentPath']) if letter == '/']) != 2:
     raise PreventUpdate
-  entityId = tmp['label']
+  entityId = tmp['label'].replace("<br>", ":")
   return showEntity(1, {'props': {'children': entityId}})
   
 def getValueLabels(value, rels, key):
@@ -370,7 +372,7 @@ def getValueLabels(value, rels, key):
       if 'datasetId' in value:
         label += '<br>datasetId: '  + value['datasetId']
         del value['datasetId']
-      result.append(dbc.Button(label, id={"type": "entity-prop", "index": key}, disabled=True, style={'background-color': 'grey', 'border': 'none'}))
+      result.append(dbc.Button(label, id={"type": "entity-prop", "index": key}, disabled=True, style={'background-color': 'grey', 'border': 'none', 'max-width': '23vw', 'overflow': 'hidden', 'white-space': 'nowrap', 'display': 'inline-block','text-overflow': 'ellipsis'}))
     elif propType == 'Relationship':
       if type(value['object']) != list:
         entryRels = [value['object']]
@@ -414,12 +416,12 @@ def geoLayerClick(n, data):
     rel2entities = getEntitiesById(rels)
     for key, value in rel2entities.items():
       for entity in value:
-        resultData.append({'rel': key, 'target': entity['id'], 'entity': entity, 'values': 1, 'entityId': entityId})
+        resultData.append({'rel': key, 'target': entity['id'].replace(":", "<br>"), 'entity': entity, 'values': 1, 'entityId': entityId.replace(":", "<br>")})
     selectedEntity = properties
     del selectedEntity['tooltip']
     del selectedEntity['value']
     del selectedEntity['rels']
-    entityDetailsHeader = dbc.Button(html.H5(selectedEntity['id']), id='show-entity-button', style={'background-color': 'grey', 'border': 'none'})
+    entityDetailsHeader = dbc.Button(html.H5(selectedEntity['id']), id='show-entity-button', style={'background-color': 'grey', 'border': 'none', 'width': '23vw', 'height': 'auto', 'overflow': 'hidden', 'white-space': 'nowrap', 'display': 'inline-block','text-overflow': 'ellipsis'})
     entityDetailsChildren.append(html.Div([dbc.Button(html.B("type: "), disabled=True, style={'background-color': 'grey', 'border': 'none'}), dbc.Button(selectedEntity['type'], disabled=True, style={'background-color': 'grey', 'border': 'none'})]))
     del selectedEntity['type']
     
@@ -433,7 +435,6 @@ def geoLayerClick(n, data):
         entityDetailsChildren.append(html.Div(divData))
   else:
     resultData.append({'rel': 'an', 'target': 'Select', 'entity': {'dummy': 'asdsadas'}, 'values': 1, 'entityId': 'entity id'})
-  print(str(resultData))
   if len(resultData) == 0:
     resultData.append({'rel': 'Relationship', 'target': 'No', 'entity': {'dummy': 'asdsadas'}, 'values': 1, 'entityId': 'found'})
   fig = px.sunburst(data_frame=resultData, path=['entityId', 'rel', 'target'], values='values', template='plotly_dark')

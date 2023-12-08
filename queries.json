@@ -1,44 +1,170 @@
 [
-    {
-        "name": "AirQualityPM10",
-        "query": {
-            "name": "AirQualityPM10",
-            "highlight-attrib": "pm10",
-            "type": "AirQualityObserved"
-        }
-    },
-    {
-        "name": "TrafficObserved",
-        "query": {
-            "name": "TrafficObserved",
-            "highlight-attrib": "avg_speed",
-            "type": "TrafficObserved"
-        }
-    },
-    {
-        "name": "Building",
-        "query": {
-            "name": "Building",
-            "highlight-attrib": "building_id",
-            "type": "Building"
-        }
-    },
 	{
         "name": "WeatherObservedRaw",
         "query": {
             "name": "WeatherObservedRaw",
             "highlight-attrib": "temperature",
             "type": "WeatherObserved",
-			"idPattern": "urn:ngsi-ld:WeatherObserved:MadridTemperature:ID:.*"
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Temperature:ID:.*",
+			"min": 0, 
+			"max": 50
         }
     },
 	{
-        "name": "WeatherIndex",
+        "name": "WeatherIndexCalculated",
         "query": {
-            "name": "WeatherIndex",
+            "name": "WeatherIndexCalculated",
             "highlight-attrib": "temperature",
             "type": "WeatherObserved",
-			"idPattern": "urn:ngsi-ld:WeatherObserved:Madrid:Hexagon:.*"
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Temperature:Hexagon:.*",
+			"q": "interpolated==0",
+			"min": 0, 
+			"max": 50
+        }
+    },
+	{
+        "name": "WeatherIndexInterpolated",
+        "query": {
+            "name": "WeatherIndexInterpolated",
+            "highlight-attrib": "temperature",
+            "type": "WeatherObserved",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Temperature:Hexagon:.*",
+			"q": "interpolated==1",
+			"min": 0, 
+			"max": 50
+        }
+    },
+    {
+        "name": "MadridAirQualityIndexNO2",
+        "query": {
+            "name": "MadridAirQualityIndexNO2",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean:NO2",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "MadridAirQualityIndexPM2_5",
+        "query": {
+            "name": "MadridAirQualityIndexPM2_5",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean:PM2_5",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "MadridAirQualityIndexPM10",
+        "query": {
+            "name": "MadridAirQualityIndexPM10",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:Index:AirQualityAnnualMean:PM10",
+			"min": 0, 
+			"max": 100
+        }
+    },
+    {
+        "name": "MadridAirQualitySubIndexNO2",
+        "query": {
+            "name": "MadridAirQualitySubIndexNO2",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean:NO2:Hexagon:.*",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "MadridAirQualitySubIndexPM2_5",
+        "query": {
+            "name": "MadridAirQualitySubIndexPM2_5",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean:PM2_5:Hexagon:.*",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "MadridAirQualitySubIndexPM10",
+        "query": {
+            "name": "MadridAirQualitySubIndexPM10",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Madrid:SubIndex:AirQualityAnnualMean:PM10:Hexagon:.*",
+			"min": 0, 
+			"max": 100
+        }
+    },
+		{
+        "name": "BerlinAirQualityIndexNO2",
+        "query": {
+            "name": "BerlinAirQualityIndexNO2",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean:NO2",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "BerlinAirQualityIndexPM2_5",
+        "query": {
+            "name": "BerlinAirQualityIndexPM2_5",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean:PM2_5",
+			"min": 0, 
+			"max": 100
+			
+        }
+    },
+	{
+        "name": "BerlinAirQualityIndexPM10",
+        "query": {
+            "name": "BerlinAirQualityIndexPM10",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:Index:AirQualityAnnualMean:PM10",
+			"min": 0, 
+			"max": 100
+        }
+    },
+    {
+        "name": "BerlinAirQualitySubIndexNO2",
+        "query": {
+            "name": "BerlinAirQualitySubIndexNO2",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean:NO2:Hexagon:.*",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "BerlinAirQualitySubIndexPM2_5",
+        "query": {
+            "name": "BerlinAirQualitySubIndexPM2_5",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean:PM2_5:Hexagon:.*",
+			"min": 0, 
+			"max": 100
+        }
+    },
+	{
+        "name": "BerlinAirQualitySubIndexPM10",
+        "query": {
+            "name": "BerlinAirQualitySubIndexPM10",
+            "highlight-attrib": "data",
+            "type": "CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean",
+			"idPattern": "urn:ngsi-ld:CityLiveabilityIndex:Berlin:SubIndex:AirQualityAnnualMean:PM10:Hexagon:.*",
+			"min": 0, 
+			"max": 100
         }
     }
 ]
